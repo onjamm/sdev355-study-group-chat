@@ -11,6 +11,7 @@ function now() {
 export default function App() {
   const [activeId, setActiveId] = useState("general");
   const [messages, setMessages] = useState(SEED_MESSAGES);
+  const [isTyping, setIsTyping] = useState(false);
 
   function handleSend(text) {
     const message = { id: crypto.randomUUID(), author: "You", time: now(), hearts: 0, text };
@@ -25,9 +26,9 @@ export default function App() {
                 activeId={activeId}
                 onSelectChannel={setActiveId} />
       <main className="main">
-        <ChatHeader channel={channel} />
+        <ChatHeader channel={channel} isTyping={isTyping} />
         <MessageList messages={messages[activeId]} />
-        <Composer onSend={handleSend}/>
+        <Composer onSend={handleSend} onTypingChange={setIsTyping}/>
       </main>
     </div>
   );
